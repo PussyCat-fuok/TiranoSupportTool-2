@@ -1,0 +1,7 @@
+*.config
+*.exe
+*.pdb
+*.cache
+*.resources
+*.txt
+*.csproj
