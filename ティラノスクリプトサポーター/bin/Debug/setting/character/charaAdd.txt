@@ -1,0 +1,10 @@
+[chara_show  name="
+"  time="1000
+"  wait="true
+"  storage="
+"  width="
+"  height="
+"  left="
+"  top="
+"  reflect="false
+"  ]

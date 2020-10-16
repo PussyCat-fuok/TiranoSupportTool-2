@@ -1,0 +1,9 @@
+[bg  time="1000
+"  storage="
+"  width="
+"  height="
+"  x="
+"  y="
+"  _clickable_img="
+"  name=
+"]

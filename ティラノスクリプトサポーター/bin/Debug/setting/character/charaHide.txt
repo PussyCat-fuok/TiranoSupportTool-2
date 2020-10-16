@@ -1,0 +1,2 @@
+[chara_hide  name="
+"  time="1000"  wait="true"  pos_mode="true"  ]

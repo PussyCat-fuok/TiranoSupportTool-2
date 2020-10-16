@@ -1,0 +1,2 @@
+[mask_off  time="1000"  effect="fadeOut"  ]
+[tb_show_message_window  ]

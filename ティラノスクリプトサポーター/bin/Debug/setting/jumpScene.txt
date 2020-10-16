@@ -1,0 +1,4 @@
+[jump  storage="
+"  target="*start
+"  ]
+[s  ]
