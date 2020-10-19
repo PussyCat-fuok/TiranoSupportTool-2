@@ -10,6 +10,9 @@ namespace ティラノスクリプトサポーター
 {
     class FileEncoder
     {
+		string Text_Path = "";
+
+
 		//入出力先フォルダ
 		const String DIRECTORY_INPUT   = "input";
 		const String DIRECTORY_OUTPUT  = "output";
@@ -32,6 +35,9 @@ namespace ティラノスクリプトサポーター
 		JumpScene        jumpScene   = new JumpScene();
 
 
+		public void SetTextPath(string path) { path = Text_Path; }
+
+
 
 		public void CreateFiles(ref object sender, ref EventArgs e)
 		{
@@ -46,7 +52,14 @@ namespace ティラノスクリプトサポーター
 			//ファイルのパスを取得
 			String path = "test.txt";
 			String text = "テストです";
-			String[] inputFiles = Directory.GetFiles(Path.GetFullPath(DIRECTORY_INPUT), "*");
+			String[] inputFiles;
+
+
+			
+			if (Text_Path != "")
+				inputFiles = Directory.GetFiles(Text_Path);        //D＆Dによるテキスト
+			else
+				inputFiles = Directory.GetFiles(Path.GetFullPath(DIRECTORY_INPUT), "*");
 
 
 			//コマンド格納
