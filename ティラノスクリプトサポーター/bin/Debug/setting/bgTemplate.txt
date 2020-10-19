@@ -5,5 +5,5 @@
 "  x="
 "  y="
 "  _clickable_img="
-"  name=
+"  name="
 "]

@@ -56,8 +56,9 @@ namespace ティラノスクリプトサポーター
 
 
             //リストに追加
+            textList.Add("[_tb_end_text]");
             textList.Add(command);                             //背景変更コマンド挿入
-            textList.Add(";" + bg_command);                    //背景
+            //textList.Add(";" + bg_command);                    //背景
         }
     }
 }

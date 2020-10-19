@@ -26,9 +26,10 @@ namespace ティラノスクリプトサポーター
 
 
 		//読み込みクラス
-		BackGroundReader BGReader   = new BackGroundReader();
-		CharacterReader CharaReader = new CharacterReader();
-		JumpScene       JumpCreator = new JumpScene();
+		BackGroundReader bgReader    = new BackGroundReader();
+		SoundReader      soundReader = new SoundReader(); 
+		CharacterReader  charaReader = new CharacterReader();
+		JumpScene        jumpScene   = new JumpScene();
 
 
 
@@ -36,6 +37,7 @@ namespace ティラノスクリプトサポーター
 		{
 			//読み込みクラス初期化
 			BackGroundReader.Initialized();
+			SoundReader.Initialized();
 			CharacterReader.Initialized();
 			JumpScene.Initialized();
 
@@ -82,11 +84,12 @@ namespace ティラノスクリプトサポーター
 		//シーンファイルを作成・出力する
 		private void outputScenario(ref string[] textlines, ref ReadFile setting)
 		{
-			int chapterCnt = 0;
-			int sceneCnt   = 1;
-			bool startFlag = false;
-			var textList   = new List<string>();
-			String newLine = "[p]";                      //改行
+			int  chapterCnt = 0;
+			int  sceneCnt   = 1;
+			bool startFlag  = false;
+			bool textFlag   = false;                      //テキスト中のフラグ
+			var  textList   = new List<string>();
+			String newLine  = "[p]";                      //改行
 
 
 
@@ -101,7 +104,10 @@ namespace ティラノスクリプトサポーター
 				//キャラクターのメッセージ( # )
 				if (textline.Contains(setting.chara))
 				{
-					CharaReader.CulcTextureCommand(textline, ref textList);     //背景変更コマンド作成
+					textFlag = false;
+
+					charaReader.CulcTextureCommand(textline, ref textList);     //背景変更コマンド作成
+					textFlag = true;
 
 					newLine = "";
 					continue;
@@ -110,9 +116,12 @@ namespace ティラノスクリプトサポーター
 				//チャプター切り替え( *** )
 				if (textline.Contains(setting.nextChapter))
 				{
+					textFlag = false;
+
+
 					//次のチャプター名
 					int next = chapterCnt + 1;
-					string name = JumpCreator.CreateJumpFileName(next, 1);
+					string name = jumpScene.CreateJumpFileName(next, 1);
 
 
 
@@ -127,9 +136,13 @@ namespace ティラノスクリプトサポーター
 				//シーン切り替え( ** )													          
 				else if (textline.Contains(setting.nextScene))
 				{
+					textFlag = false;
+
+
+
 					//次のシーン名
 					int next    = sceneCnt + 1;
-					string name = JumpCreator.CreateJumpFileName(chapterCnt, next);
+					string name = jumpScene.CreateJumpFileName(chapterCnt, next);
 
 
 
@@ -141,8 +154,12 @@ namespace ティラノスクリプトサポーター
 				//背景切り替え( * )													             
 				else if (textline.Contains(setting.bg))
 				{
-					BackGroundReader BGReader = new BackGroundReader();
-					BGReader.CulcTextureCommand(textline, ref textList);     //背景変更コマンド作成
+					textFlag = false;
+
+
+
+					bgReader.CulcTextureCommand(textline, ref textList);     //背景変更コマンド作成
+					soundReader.PlayBGM(textline, ref textList);
 
 					if (!startFlag)
 					{
@@ -174,7 +191,7 @@ namespace ティラノスクリプトサポーター
 
 			//キャラ消去を入れるか
 			if (charaDelete)
-				CharaReader.DeleteCharacter(textList);
+				charaReader.DeleteCharacter(textList);
 
 			textList.Add(nextFile);                //シーン切り替え
 
