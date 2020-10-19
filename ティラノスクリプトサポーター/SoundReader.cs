@@ -11,7 +11,7 @@ namespace ティラノスクリプトサポーター
         const string STOP_BGM        = "stopBGM";
 
         static string[] playBGM;
-        static string[] stopBGM;
+        static string   stopBGM;
 
 
 
@@ -19,7 +19,7 @@ namespace ティラノスクリプトサポーター
         {
             //テンプレートの文字を格納する
             playBGM = File.ReadAllLines("setting" + "\\" + SOUND_DIRECTORY + "\\" + PLAY_BGM + ".txt");
-            stopBGM = File.ReadAllLines("setting" + "\\" + SOUND_DIRECTORY + "\\" + STOP_BGM + ".txt");
+            stopBGM = File.ReadAllText("setting" + "\\" + SOUND_DIRECTORY + "\\" + STOP_BGM + ".txt");
         }
 
         
@@ -33,7 +33,6 @@ namespace ティラノスクリプトサポーター
             command  = playBGM[0] + name + ".ogg";
             command += playBGM[1];
 
-            textList.Add("[_tb_end_text]");
             textList.Add(command);
         }
 
@@ -41,8 +40,7 @@ namespace ティラノスクリプトサポーター
 
         public void StopBGM(ref List<string> textList)
         {
-            textList.Add("[_tb_end_text]");
-            textList.Add(stopBGM[0]);
+            textList.Add(stopBGM);
         }
     }
 }

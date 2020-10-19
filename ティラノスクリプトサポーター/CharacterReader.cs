@@ -66,7 +66,7 @@ namespace ティラノスクリプトサポーター
 
 
 
-        public void CulcTextureCommand(string chara_command, ref List<string> textList)
+        public void TextStart(string chara_command, ref List<string> textList)
         {
             string chara_name = chara_command.Replace("#", "");   //キャラ名(表情番号付き)取得
             string name = RemoveName(chara_name);           //キャラ名(表情番号ナシ)取得
@@ -87,13 +87,9 @@ namespace ティラノスクリプトサポーター
                     AddCharacter(chara_index, directory, ref textList);
                 else
                     ChangeCharacter(name, directory, ref textList);
-
-                //キャラ追加
-                //AddCharacter(directory, textList);
             }
 
 
-            textList.Add("[_tb_end_text]");
             textList.Add("[tb_start_text mode = 4]");
             textList.Add("#" + name);                      //キャラメッセージコマンド挿入
         }
@@ -131,12 +127,12 @@ namespace ティラノスクリプトサポーター
         private void ChangeCharacter(string name, string directory, ref List<string> textList)
         {
             string command;
-            command = chara_Change_Command[0] + "\n";
+            command = chara_Change_Command[0] + name;
 
-            command += chara_Change_Command[1] + name;
+            command += chara_Change_Command[1];
             command += chara_Change_Command[2];
-            command += chara_Change_Command[3];
-            command += chara_Change_Command[4] + "chara\\" + directory;
+            command += chara_Change_Command[3] + "chara\\" + directory;
+            command += chara_Change_Command[4];
 
             //リストに追加
             textList.Add(command);                         //キャラ登場コマンド挿入
