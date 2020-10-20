@@ -10,7 +10,7 @@ namespace ティラノスクリプトサポーター
 {
     class FileEncoder
     {
-		string Text_Path = "";
+		string Text_Path = "";                               //D＆Dで取得したテキストファイルのパス
 
 
 		//入出力先フォルダ
@@ -20,11 +20,6 @@ namespace ティラノスクリプトサポーター
 		//コマンドフォルダ
 		const String DIRECTORY_SETTING = "setting";
 		const String SHOWMESSAGE_COMMAND = "showMessage";            //メッセージ開始
-		const String NEXT_CHAPTER      = "nextChapter";      //チャプター切り替え
-		const String NEXT_SCENE        = "nextScene";        //シーン切り替え
-		const String CHARACTER         = "character";        //キャラメッセージ
-		const String BACK_GROUND       = "bg";               //背景
-
 
 
 		//読み込みクラス
@@ -33,6 +28,12 @@ namespace ティラノスクリプトサポーター
 		CharacterReader  charaReader = new CharacterReader();
 		JumpScene        jumpScene   = new JumpScene();
 		FadeSetter       fadeSetter  = new FadeSetter();
+
+
+
+		string startTemplate;
+
+
 
 
 		public void SetTextPath(string path) { path = Text_Path; }
@@ -50,7 +51,6 @@ namespace ティラノスクリプトサポーター
 
 
 
-
 			//ファイルのパスを取得
 			String path = "test.txt";
 			String text = "テストです";
@@ -65,13 +65,13 @@ namespace ティラノスクリプトサポーター
 
 
 			//コマンド格納
-			String[] files        = Directory.GetFiles(Path.GetFullPath("setting"), "*");
-			ReadFile setting      = new ReadFile();
-			setting.startTemplate = File.ReadAllText(DIRECTORY_SETTING + "\\" + SHOWMESSAGE_COMMAND        + ".txt");
-			setting.nextChapter   = File.ReadAllText(DIRECTORY_SETTING + "\\" + "initial\\" + NEXT_CHAPTER + ".txt");
-			setting.nextScene     = File.ReadAllText(DIRECTORY_SETTING + "\\" + "initial\\" + NEXT_SCENE   + ".txt");
-			setting.chara         = File.ReadAllText(DIRECTORY_SETTING + "\\" + "initial\\" + CHARACTER    + ".txt");
-			setting.bg            = File.ReadAllText(DIRECTORY_SETTING + "\\" + "initial\\" + BACK_GROUND  + ".txt");
+			//String[] files = Directory.GetFiles(Path.GetFullPath("setting"), "*");
+			startTemplate = File.ReadAllText(DIRECTORY_SETTING + "\\" + SHOWMESSAGE_COMMAND + ".txt");
+
+
+
+			ReadMarks setting = new ReadMarks();
+			setting.Initialized();
 
 
 
@@ -96,10 +96,10 @@ namespace ティラノスクリプトサポーター
 
 
 		//シーンファイルを作成・出力する
-		private void outputScenario(ref string[] textlines, ref ReadFile setting)
+		private void outputScenario(ref string[] textlines, ref ReadMarks setting)
 		{
-			int  chapterCnt = 0;
-			int  sceneCnt   = 1;
+			int  chapterCnt = 0;                          //チャプターのカウント
+			int  sceneCnt   = 1;                          //シーンのカウント
 			bool startFlag  = false;
 			bool textFlag   = false;                      //テキスト中のフラグ
 			var  textList   = new List<string>();
@@ -116,9 +116,9 @@ namespace ティラノスクリプトサポーター
 				}
 
 				//キャラクターのメッセージ( # )
-				if (textline.Contains(setting.chara))
+				if (textline.Contains(setting.defMarks[(int)SETTING.CHARA]))
 				{
-					CheckEndText(ref textFlag, ref textList);
+					SetEndText(ref textFlag, ref textList);
 
 
 					charaReader.TextStart(textline, ref textList);     //背景変更コマンド作成
@@ -129,9 +129,9 @@ namespace ティラノスクリプトサポーター
 				}
 
 				//チャプター切り替え( *** )
-				if (textline.Contains(setting.nextChapter))
+				if (textline.Contains(setting.defMarks[(int)SETTING.NEXTCHAPTER]))
 				{
-					CheckEndText(ref textFlag, ref textList);
+					SetEndText(ref textFlag, ref textList);
 
 					//次のチャプター名
 					int next = chapterCnt + 1;
@@ -153,9 +153,9 @@ namespace ティラノスクリプトサポーター
 					startFlag = false;
 				}
 				//シーン切り替え( ** )													          
-				else if (textline.Contains(setting.nextScene))
+				else if (textline.Contains(setting.defMarks[(int)SETTING.NEXTSCENE]))
 				{
-					CheckEndText(ref textFlag, ref textList);
+					SetEndText(ref textFlag, ref textList);
 
 					//次のシーン名
 					int next    = sceneCnt + 1;
@@ -167,17 +167,20 @@ namespace ティラノスクリプトサポーター
 					startFlag = false;
 				}
 				//背景切り替え( * )													             
-				else if (textline.Contains(setting.bg))
+				else if (textline.Contains(setting.defMarks[(int)SETTING.BACKGROUND]))
 				{
-					CheckEndText(ref textFlag, ref textList);
+					SetEndText(ref textFlag, ref textList);
 
-					bgReader.CulcTextureCommand(textline, ref textList);     //背景変更コマンド作成
+					//背景・BGMの変更
+					bgReader.CulcTextureCommand(textline, ref textList);    
 					soundReader.PlayBGM(textline, ref textList);
 
+
+					//初回のみの処理
 					if (!startFlag)
 					{
 						fadeSetter.SetFadeOut(ref textList);
-						textList.Add(setting.startTemplate);      //開始コマンド挿入
+						textList.Add(startTemplate);      //開始コマンド挿入
 						startFlag = true;
 					}
 				}
@@ -215,7 +218,7 @@ namespace ティラノスクリプトサポーター
 
 
 
-		private void CheckEndText(ref bool textFlag, ref List<string> textList)
+		private void SetEndText(ref bool textFlag, ref List<string> textList)
 		{
 			//キャラのテキストの後
 			if (textFlag)

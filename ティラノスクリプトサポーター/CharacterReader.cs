@@ -90,7 +90,7 @@ namespace ティラノスクリプトサポーター
             }
 
 
-            textList.Add("[tb_start_text mode = 4]");
+            textList.Add("[tb_start_text mode = 4]");      //メッセージ開始コマンド
             textList.Add("#" + name);                      //キャラメッセージコマンド挿入
         }
 

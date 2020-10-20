@@ -1,16 +1,11 @@
-﻿using System;
-
+﻿
 namespace ティラノスクリプトサポーター
 {
-	class ReadFile
+    class ReadFile
 	{
-		public String startTemplate { set; get; }
-		public String fadeTemplate { set; get; }
-		public String charaTemplate { set; get; }
-		public String bgTemplate { set; get; }
-		public String nextChapter { set; get; }
-		public String nextScene { set; get; }
-		public String chara { set; get; }
-		public String bg { set; get; }
+        public string chara { private set; get; }
+        public string bg { private set; get; }
+        public string nextChapter { private set; get; }
+		public string nextScene { private set; get; }
 	}
 }

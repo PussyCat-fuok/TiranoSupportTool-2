@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Collections.Generic;
-using System.Windows.Forms;
+
+
 
 namespace ティラノスクリプトサポーター
 {
