@@ -4,3 +4,6 @@
 *.cache
 *.resources
 *.csproj
+*.vs
+/ティラノスクリプトサポーター/obj/Debug/ティラノスクリプトサポーター.csproj.FileListAbsolute.txt
+/ティラノスクリプトサポーター/obj/Release/ティラノスクリプトサポーター.csproj.FileListAbsolute.txt
