@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
@@ -20,39 +21,36 @@ namespace ティラノスクリプトサポーター
     }
 
 
-    class ReadMarks
+    class MarkFile
     {
         //コマンドフォルダ
         const string DIRECTORY_SETTING = "setting";
 
-        //識別マーク
-        const string NEXT_CHAPTER = "nextChapter";      //チャプター切り替え
-        const string NEXT_SCENE   = "nextScene";        //シーン切り替え
-        const string CHARACTER    = "character";        //キャラメッセージ
-        const string BACK_GROUND  = "bg";               //背景
 
+        private string[] defMarks;                            //初期で設定された識別文字
 
-
-        public string[] defMarks { private set; get; }     //初期で設定された識別文字
-
-        private string[] setMarks;                                            //自分で設定した識別文字
+        public string[] setMarks { private set; get; }        //自分で設定した識別文字
 
 
 
         public void Initialized()
         {
-            defMarks = new string[(int)SETTING.SETTING_MAX];
-
-            defMarks[(int)SETTING.CHARA]       = File.ReadAllText(DIRECTORY_SETTING + "\\" + "initial\\" + CHARACTER    + ".txt");
-            defMarks[(int)SETTING.BACKGROUND]  = File.ReadAllText(DIRECTORY_SETTING + "\\" + "initial\\" + BACK_GROUND  + ".txt");
-            defMarks[(int)SETTING.NEXTSCENE]   = File.ReadAllText(DIRECTORY_SETTING + "\\" + "initial\\" + NEXT_SCENE   + ".txt");
-            defMarks[(int)SETTING.NEXTCHAPTER] = File.ReadAllText(DIRECTORY_SETTING + "\\" + "initial\\" + NEXT_CHAPTER + ".txt");
+            defMarks = File.ReadAllLines("setting\\initial\\defmarks.txt");
 
 
             //セーブファイルの読み込み
-            setMarks = File.ReadAllLines("setting\\initial\\marks.txt");
+            setMarks = File.ReadAllLines("setting\\initial\\setmarks.txt");
 
-            //設定されてなければデフォルトに
+
+            //デフォルト設定ファイルに抜けがあった場合
+            for (int i = 0; i < defMarks.Length; i++)
+            { 
+                if(defMarks[i]=="")
+                    MessageBox.Show("識別文字の数が足りません", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+                
+
+            //個人設定ファイルに抜けがあればデフォルトに
             for (int i = 0; i < setMarks.Length; i++)
             {
                 if (setMarks[i] == "")
@@ -61,7 +59,11 @@ namespace ティラノスクリプトサポーター
         }
 
 
-
+        //=======================================
+        //
+        //  ファイル設定用関数
+        //
+        //=======================================
 
         public void SetMark(SETTING num, string mark)
         {

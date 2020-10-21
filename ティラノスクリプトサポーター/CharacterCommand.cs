@@ -23,14 +23,14 @@ namespace ティラノスクリプトサポーター
 
 
 
-    class CharacterReader
+    class CharacterCommand
     {
-        const string DIRECTORY_CHARA = "setting\\character\\";		   //キャラ関係コマンドフォルダ
+        const string DIRECTORY_CHARA = "setting\\character\\";		//キャラ関係コマンドフォルダ
 
-        const string CHARA_ADD = "charaAdd";		               //キャラ登場コマンド
+        const string CHARA_ADD    = "charaAdd";		                //キャラ登場コマンド
         const string CHARA_CHANGE = "charaChange";                  //キャラ変更コマンド
-        const string CHARA_HIDE = "charaHide";                    //キャラ退場コマンド
-        const string CHARA_LIST = "charaList";                    //キャラ割当て番号
+        const string CHARA_HIDE   = "charaHide";                    //キャラ退場コマンド
+        const string CHARA_LIST   = "charaList";                    //キャラ割当て番号
 
 
 
@@ -39,7 +39,7 @@ namespace ティラノスクリプトサポーター
         static string[] chara_Change_Command;
         static string[] chara_Hide_Command;
         static string[] chara_list;
-        static bool[] chara_exist;
+        static bool[]   chara_exist;
 
 
 

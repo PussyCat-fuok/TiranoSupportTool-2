@@ -18,16 +18,16 @@ namespace ティラノスクリプトサポーター
 		const String DIRECTORY_OUTPUT  = "output";
 
 		//コマンドフォルダ
-		const String DIRECTORY_SETTING = "setting";
+		const String DIRECTORY_SETTING   = "setting";
 		const String SHOWMESSAGE_COMMAND = "showMessage";            //メッセージ開始
 
 
 		//読み込みクラス
-		BackGroundReader bgReader    = new BackGroundReader();
-		SoundReader      soundReader = new SoundReader(); 
-		CharacterReader  charaReader = new CharacterReader();
-		JumpScene        jumpScene   = new JumpScene();
-		FadeSetter       fadeSetter  = new FadeSetter();
+		BackGroundReader bgReader     = new BackGroundReader();
+		SoundReader      soundReader  = new SoundReader(); 
+		CharacterCommand charaCommand = new CharacterCommand();
+		JumpScene        jumpScene    = new JumpScene();
+		FadeSetter       fadeSetter   = new FadeSetter();
 
 
 
@@ -45,7 +45,7 @@ namespace ティラノスクリプトサポーター
 			//読み込みクラス初期化
 			BackGroundReader.Initialized();
 			SoundReader.Initialized();
-			CharacterReader.Initialized();
+			CharacterCommand.Initialized();
 			JumpScene.Initialized();
 			FadeSetter.Initialized();
 
@@ -70,7 +70,7 @@ namespace ティラノスクリプトサポーター
 
 
 
-			ReadMarks setting = new ReadMarks();
+			MarkFile setting = new MarkFile();
 			setting.Initialized();
 
 
@@ -96,7 +96,7 @@ namespace ティラノスクリプトサポーター
 
 
 		//シーンファイルを作成・出力する
-		private void outputScenario(ref string[] textlines, ref ReadMarks setting)
+		private void outputScenario(ref string[] textlines, ref MarkFile setting)
 		{
 			int  chapterCnt = 0;                          //チャプターのカウント
 			int  sceneCnt   = 1;                          //シーンのカウント
@@ -116,12 +116,12 @@ namespace ティラノスクリプトサポーター
 				}
 
 				//キャラクターのメッセージ( # )
-				if (textline.Contains(setting.defMarks[(int)SETTING.CHARA]))
+				if (textline.Contains(setting.setMarks[(int)SETTING.CHARA]))
 				{
 					SetEndText(ref textFlag, ref textList);
 
 
-					charaReader.TextStart(textline, ref textList);     //背景変更コマンド作成
+					charaCommand.TextStart(textline, ref textList);     //背景変更コマンド作成
 					textFlag = true;
 
 					newLine = "";
@@ -129,7 +129,7 @@ namespace ティラノスクリプトサポーター
 				}
 
 				//チャプター切り替え( *** )
-				if (textline.Contains(setting.defMarks[(int)SETTING.NEXTCHAPTER]))
+				if (textline.Contains(setting.setMarks[(int)SETTING.NEXTCHAPTER]))
 				{
 					SetEndText(ref textFlag, ref textList);
 
@@ -143,7 +143,7 @@ namespace ティラノスクリプトサポーター
                     {
 						//キャラ・音楽消去
 						soundReader.StopBGM(ref textList);
-						charaReader.DeleteCharacter(textList);
+						charaCommand.DeleteCharacter(textList);
 
 						outputFile(chapterCnt, sceneCnt, ref textList, name);         //ファイル出力
                     }
@@ -153,7 +153,7 @@ namespace ティラノスクリプトサポーター
 					startFlag = false;
 				}
 				//シーン切り替え( ** )													          
-				else if (textline.Contains(setting.defMarks[(int)SETTING.NEXTSCENE]))
+				else if (textline.Contains(setting.setMarks[(int)SETTING.NEXTSCENE]))
 				{
 					SetEndText(ref textFlag, ref textList);
 
@@ -167,7 +167,7 @@ namespace ティラノスクリプトサポーター
 					startFlag = false;
 				}
 				//背景切り替え( * )													             
-				else if (textline.Contains(setting.defMarks[(int)SETTING.BACKGROUND]))
+				else if (textline.Contains(setting.setMarks[(int)SETTING.BACKGROUND]))
 				{
 					SetEndText(ref textFlag, ref textList);
 
