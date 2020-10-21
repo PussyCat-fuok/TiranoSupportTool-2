@@ -1,0 +1,11 @@
+C:\Users\r1kub\OneDrive\デスクトップ\git\intern 改\ティラノスクリプトサポーター\bin\Debug\ティラノスクリプトサポーター.exe.config
+C:\Users\r1kub\OneDrive\デスクトップ\git\intern 改\ティラノスクリプトサポーター\bin\Debug\ティラノスクリプトサポーター.exe
+C:\Users\r1kub\OneDrive\デスクトップ\git\intern 改\ティラノスクリプトサポーター\bin\Debug\ティラノスクリプトサポーター.pdb
+C:\Users\r1kub\OneDrive\デスクトップ\git\intern 改\ティラノスクリプトサポーター\obj\Debug\ティラノスクリプトサポーター.csprojAssemblyReference.cache
+C:\Users\r1kub\OneDrive\デスクトップ\git\intern 改\ティラノスクリプトサポーター\obj\Debug\ティラノスクリプトサポーター.Form1.resources
+C:\Users\r1kub\OneDrive\デスクトップ\git\intern 改\ティラノスクリプトサポーター\obj\Debug\ティラノスクリプトサポーター.Form2.resources
+C:\Users\r1kub\OneDrive\デスクトップ\git\intern 改\ティラノスクリプトサポーター\obj\Debug\ティラノスクリプトサポーター.Properties.Resources.resources
+C:\Users\r1kub\OneDrive\デスクトップ\git\intern 改\ティラノスクリプトサポーター\obj\Debug\ティラノスクリプトサポーター.csproj.GenerateResource.cache
+C:\Users\r1kub\OneDrive\デスクトップ\git\intern 改\ティラノスクリプトサポーター\obj\Debug\ティラノスクリプトサポーター.csproj.CoreCompileInputs.cache
+C:\Users\r1kub\OneDrive\デスクトップ\git\intern 改\ティラノスクリプトサポーター\obj\Debug\ティラノスクリプトサポーター.exe
+C:\Users\r1kub\OneDrive\デスクトップ\git\intern 改\ティラノスクリプトサポーター\obj\Debug\ティラノスクリプトサポーター.pdb
