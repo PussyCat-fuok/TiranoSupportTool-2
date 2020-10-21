@@ -3,7 +3,7 @@
 *.pdb
 *.cache
 *.resources
-*.csproj
 *.vs
 /ティラノスクリプトサポーター/obj/Debug/ティラノスクリプトサポーター.csproj.FileListAbsolute.txt
 /ティラノスクリプトサポーター/obj/Release/ティラノスクリプトサポーター.csproj.FileListAbsolute.txt
+/ティラノスクリプトサポーター/obj/Debug/.NETFramework,Version=v4.7.2.AssemblyAttributes.cs
